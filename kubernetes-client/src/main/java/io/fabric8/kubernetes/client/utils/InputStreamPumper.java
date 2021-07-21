@@ -86,7 +86,9 @@ public class InputStreamPumper {
   public static CompletableFuture<?> pump(InputStream in, Writable out, Executor executor) {
     return CompletableFuture.runAsync(() -> {
       try {
-        InputStreamPumper.transferTo(in, out);
+        if (null != in) {
+            InputStreamPumper.transferTo(in, out);
+        }
       } catch (Exception e) {
         if (!Thread.currentThread().isInterrupted()) {
           LOGGER.error("Error while pumping stream.", e);
